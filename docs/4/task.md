@@ -1,31 +1,44 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+### Na serveru Debian-02:
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+1. **Nastavení rozhraní pro DHCP:**
+     ```
+     sudo nano /etc/network/interfaces
+     ```
+     ```
+     iface eth0 inet dhcp
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+2. **Restartování síťových služeb:**
+     ```
+     sudo systemctl restart networking
+     ```
+
+### Na klientovi Ubuntu-01:
+
+1. **Nastavení rozhraní pro DHCP:**
+     ```
+     sudo nano /etc/netplan/01-netcfg.yaml
+     ```
+     ```
+     network:
+         version: 2
+         renderer: networkd
+         ethernets:
+             eth0:
+                 dhcp4: true
+     ```
+     
+2. **Aplikace změn v konfiguraci:**
+     ```
+     sudo netplan apply
+     ```
+
+### Ověření funkčnosti:
+
+1. **Zkontrolování přidělených IP adres:**
+   - Na serveru Debian-02 `ip addr show`.
+   - Na klientovi Ubuntu-01 `ip address` nebo `ifconfig`.
+
+2. **Testování konektivity:**
+   - `ping <IP_adresa_serveru>`.
