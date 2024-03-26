@@ -1,31 +1,51 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+### Na serveru Debian-02:
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
+1. **Instalace Apache:**
+   ```bash
+   sudo apt update
+   sudo apt install apache2
    ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+2. **Vytvoření kořenového adresáře pro novou webovou stránku:**
+   ```bash
+   sudo mkdir /home/web
+   ```
+
+3. **Příprava webové statické stránky:**
+   - Přenesení souborů webové stránky (HTML, CSS, obrázky atd.) do adresáře `/home/web/`.
+
+4. **Konfigurace nového virtualhostu:**
+     ```bash
+     sudo nano /etc/apache2/sites-available/novy_virtualhost.conf
+     ```
+     ```
+     <VirtualHost *:80>
+         ServerAdmin webmaster@example.com
+         ServerName novy_virtualhost
+         DocumentRoot /home/web
+
+         <Directory /home/web>
+             Options Indexes FollowSymLinks
+             AllowOverride None
+             Require all granted
+         </Directory>
+
+         ErrorLog ${APACHE_LOG_DIR}/novy_virtualhost_error.log
+         CustomLog ${APACHE_LOG_DIR}/novy_virtualhost_access.log combined
+     </VirtualHost>
+     ```
+     - `ServerAdmin` - e-mail správce serveru.
+     - `ServerName` - název nového virtualhostu.
+     - `DocumentRoot` - kořenový adresář pro nový virtualhost.
+     - `ErrorLog` a `CustomLog` - cesty k log souborům pro tento virtualhost.
+
+5. **Aktivace nového virtualhostu:**
+   ```bash
+   sudo a2ensite novy_virtualhost.conf
+   ```
+
+6. **Restartování služby Apache:**
+   ```bash
+   sudo systemctl restart apache2
+   ```
