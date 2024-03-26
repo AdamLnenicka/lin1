@@ -1,31 +1,31 @@
+### Na serveru Debian-02:
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+1. **Přidání aliasu pro doménu www.test2024.com:**
+     ```bash
+     sudo nano /etc/apache2/sites-available/novy_virtualhost.conf
+     ```
+   - Přidejte alias pro doménu `www.test2024.com`:
+     ```apache
+     <VirtualHost *:80>
+         ServerAdmin webmaster@example.com
+         ServerName novy_virtualhost
+         ServerAlias www.test2024.com   # Přidat tento řádek
+         DocumentRoot /home/web
+         ...
+     ```
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+2. **Aktualizace konfigurace Apache:**
+   - Aktualizujte konfiguraci Apache:
+     ```bash
+     sudo a2ensite novy_virtualhost.conf
+     sudo systemctl restart apache2
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+### Na klientovi Ubuntu-01:
+ **Aktualizace souboru hosts:**
+     ```bash
+     sudo nano /etc/hosts
+     ```
+     ```
+     <IP_adresa_Debian-02>   www.test2024.com
+     ```
