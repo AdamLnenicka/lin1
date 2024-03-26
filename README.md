@@ -50,3 +50,9 @@
 **10. NFS Share Setup:**
    - NFS share configured on debian-02 for the /share directory.
    - Automatic mounting of the NFS share set up on ubuntu-01 for the /backups directory.
+
+**11. NFS Share Setup:**
+- Create a bash script on the ubuntu-01 client that tests whether the utilities tar, telnet, and htop are installed in the system. If the package is installed, print "Package <name> is installed" to the terminal; if not, print "Package <name> is not installed". Save it as test_packages.sh in the home directory of the user 'student'
+
+**12. NFS Share Setup:**
+- Install and set up the WordPress content management system on ubuntu-01. Ensure security during configuration. Complete the initial installation and end up on the WordPress homepage
