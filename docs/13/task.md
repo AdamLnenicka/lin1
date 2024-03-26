@@ -1,31 +1,31 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+### Na serveru Debian-02:
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
+1. **Vytvoření souboru o velikosti 2GB:**
+   ```bash
+   sudo dd if=/dev/zero of=/disk.img bs=1M count=2048
    ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+2. **Instalace a konfigurace iSCSI Targetu:**
+     ```bash
+     sudo apt update
+     sudo apt install tgt
+     ```
+   
+     ```bash
+     sudo nano /etc/tgt/conf.d/disk.img.conf
+     ```
+   
+     ```
+     <target iqn.2024-03.exam.test:disk>
+         backing-store /disk.img
+         incominguser xlnenick libovolne_heslo
+     </target>
+     ```
+     - `iqn.2024-03.exam.test:disk` je doménové jméno IQN.
+     - `incominguser xlnenick libovolne_heslo` 
+
+3. **Restartování služby iSCSI Targetu:**
+   ```bash
+   sudo systemctl restart tgt
+   ```
