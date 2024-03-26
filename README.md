@@ -1,7 +1,7 @@
 **Project Documentation: Implementation of IT Infrastructure for Ubuntu and Debian Servers**
 
 **1. Introduction:**
-   This project aims to set up a robust IT infrastructure involving Ubuntu and Debian servers. The infrastructure includes network configuration, hostname settings, DHCP server setup, SSH server configuration, automatic backup scripts, and log file management.
+   This project aims to set up a robust IT infrastructure involving Ubuntu and Debian servers. The infrastructure includes network configuration, hostname settings, DHCP server setup, SSH server configuration, automatic backup scripts, log file management, and more.
 
 **2. Infrastructure Setup:**
    - **Server Installation:** 
