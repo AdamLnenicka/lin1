@@ -1,31 +1,51 @@
+Pro splnění úkolu 5 na serveru Debian-02, který bude sloužit jako zálohovací server, následujte tyto kroky:
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+1. **Instalace SSH serveru:**
+   - Otevřete terminál na serveru Debian-02.
+   - Aktualizujte seznam dostupných balíčků:
+     ```
+     sudo apt update
+     ```
+   - Nainstalujte SSH server:
+     ```
+     sudo apt install openssh-server
+     ```
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+2. **Konfigurace SSH serveru pro přihlášení bez hesla:**
+   - Otevřete konfigurační soubor SSH serveru pro úpravy:
+     ```
+     sudo nano /etc/ssh/sshd_config
+     ```
+   - Ujistěte se, že přihlašování pomocí hesla je povoleno (výchozí nastavení):
+     ```
+     PasswordAuthentication yes
+     ```
+   - Ujistěte se, že přihlašování pomocí SSH klíčů je povoleno:
+     ```
+     PubkeyAuthentication yes
+     ```
+   - Uložte provedené změny a zavřete editor.
+   - Restartujte SSH server, aby se změny projevily:
+     ```
+     sudo systemctl restart ssh
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+3. **Vytvoření adresáře pro zálohy:**
+   - Vytvořte adresář `/share`, který bude sloužit pro zálohy:
+     ```
+     sudo mkdir /share
+     ```
+
+4. **Nastavení oprávnění adresáře /share:**
+     ```
+     sudo chown -R student:student /share
+     ```
+     ```
+     sudo chmod -R 700 /share
+     ```
+
+5. **Konfigurace přihlašování bez hesla pro uživatele student:**
+   - eřejný klíč do souboru `~/.ssh/authorized_keys` ve složce domovského adresáře `student` na serveru Debian-02.
+
+6. **Vytvoření podadresářů s hostnames:**
+   - V adresáři `/share` podadresáře s hostnames druhého serveru a klienta.
