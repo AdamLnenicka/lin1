@@ -1,31 +1,61 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+### Na klientovi Debian-01:
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
+1. **Instalace iSCSI Initiatoru:**
+   ```bash
+   sudo apt update
+   sudo apt install open-iscsi
    ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+2. **Konfigurace iSCSI Initiatoru:**
+     ```bash
+     sudo nano /etc/iscsi/initiatorname.iscsi
+     ```
+     ```
+     InitiatorName=iqn.2022-03.com.example:debian01
+     ```
+
+3. **Připojení iSCSI zařízení:**
+     ```bash
+     sudo iscsiadm --mode discovery --type sendtargets --portal [IPv6_adresa_serveru]:3260
+     ```
+     ```bash
+     sudo iscsiadm --mode node --targetname iqn.2022-03.com.example:disk01 --portal [IPv6_adresa_serveru]:3260 --login
+     ```
+
+4. **Vytvoření tabulky oddílů GPT:**
+     ```bash
+     sudo parted /dev/sdX mklabel gpt
+     ```
+
+5. **Vytvoření oddílů:**
+     ```bash
+     sudo mkfs.ext3 /dev/sdX1
+     ```
+     ```bash
+     sudo mkfs.ntfs /dev/sdX2
+     ```
+
+6. **Vytvoření adresářů pro připojení:**
+   ```bash
+   sudo mkdir /mnt/ext3 /mnt/ntfs
+   ```
+
+7. **Připojení oddílů:**
+     ```bash
+     sudo mount /dev/sdX1 /mnt/ext3
+     ```
+     ```bash
+     sudo mount /dev/sdX2 /mnt/ntfs
+     ```
+
+8. **Nastavení oprávnění pro uživatele student:**
+   ```bash
+   sudo chown -R student:student /mnt/ext3 /mnt/ntfs
+   ```
+
+9. **Konfigurace automatického připojení:**
+     ```
+     /dev/sdX1 /mnt/ext3 ext3 defaults 0 0
+     /dev/sdX2 /mnt/ntfs ntfs defaults 0 0
+     ```
