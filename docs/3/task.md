@@ -1,31 +1,46 @@
+Zde je podrobný návod pro instalaci a konfiguraci DHCP serveru na serveru Debian-01:
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+1. **Instalace DHCP serveru:**
+     ```
+     sudo apt install isc-dhcp-server
+     ```
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+2. **Konfigurace DHCP serveru:**
+     ```
+     sudo nano /etc/dhcp/dhcpd.conf
+     ```
+   - úpravy:
+       ```
+       option domain-name "exam.org";
+       ```
+     - DNS servery na veřejné servery Google (8.8.8.8 a 2001:4860:4860::8888):
+       ```
+       option domain-name-servers 8.8.8.8, 2001:4860:4860::8888;
+       ```
+     - rozsah IP adres
+       ```
+       subnet 10.0.1.0 netmask 255.255.255.0 {
+           range 10.0.1.100 10.0.1.200;
+           option routers 10.0.1.1;
+           option subnet-mask 255.255.255.0;
+       }
+       ```
+       
+4. **Nastavení autoritativního režimu:**
+   - na začátek konfiguračního souboru:
+     ```
+     authoritative;
+     ```
+     
+5. **povolení DHCP serveru na rozhraní:**
+     ```
+     sudo nano /etc/default/isc-dhcp-server
+     INTERFACESv4="eth0"
+     INTERFACESv6="eth0"
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+6. **Restartování DHCP serveru:**
+   - Restartujte DHCP server, aby se změny projevily:
+     ```
+     sudo systemctl restart isc-dhcp-server
+     ```
