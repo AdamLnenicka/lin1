@@ -45,11 +45,10 @@ Pro získání SSH klíče:
    - Spustit příkaz `ssh-keygen`. Typicky `~/.ssh/id_rsa` pro privátní klíč a `~/.ssh/id_rsa.pub` pro veřejný klíč.
 
 2. **Kopírování veřejného klíče na server:**
-   - zkopírovat obsah vašeho veřejného klíče `~/.ssh/id_rsa.pub` na server
-   - použít příkaz `ssh-copy-id`
+   - zkopírovat obsah klíče `~/.ssh/id_rsa.pub` na server
      ```
      ssh-copy-id username@server_ip
      ```
 
 3. **Přihlášení na server bez hesla:**
-  - spustit příkaz `ssh username@server_ip`
+`ssh username@server_ip`
