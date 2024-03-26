@@ -1,31 +1,46 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+### Na serveru Debian-01:
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+1. **Vytvoření adresáře pro zálohy:**
+     ```
+     sudo mkdir /home/student/backup
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+### Na klientovi Ubuntu-01:
+
+1. **Vytvoření skriptu pro zálohování:**
+     ```
+     nano backup_script.sh
+     ```
+
+2. **Napište obsah skriptu:**
+     ```bash
+     #!/bin/bash
+     
+     # Definice proměnných
+     TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+     BACKUP_DIR="/home/student/backup"
+     LOG_FILE="/var/log/backups.log"
+     
+     # Zálohování domovského adresáře
+     tar -czf "$BACKUP_DIR/backup_$TIMESTAMP.tar.gz" /home/student
+     
+     # Zápis do logu
+     echo "Backup finished at $(date +"%H:%M")" >> $LOG_FILE
+     ```
+
+3. **Nastavení oprávnění:**
+     ```
+     chmod +x backup_script.sh
+     ```
+
+4. **Plánování automatického spouštění:**
+   -  `crontab -e`, na konec souboru:
+     ```
+     */30 * * * * /path/to/backup_script.sh
+     ```
+
+5. **Manuální spuštění skriptu:**
+     ```
+     ./backup_script.sh
+     ```
