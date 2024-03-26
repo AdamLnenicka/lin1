@@ -1,31 +1,40 @@
 
-**Pro Ubuntu klienta (ubuntu-01):**
-1. V terminálu spustit příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname ubuntu-01
-   ```
-2. Potvrdit změnu zadáním hesla správce (sudo).
-3. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `ubuntu-01`.
+ **Vytvoření nového bash skriptu:**
+   - Spusťte příkaz:
+     ```
+     nano test_packages.sh
+     ```
+     
+     ```bash
+     #!/bin/bash
+     
+     # Funkce pro testování instalace balíčku
+     test_package() {
+         if dpkg -s $1 &> /dev/null; then
+             echo "Package $1 is installed"
+         else
+             echo "Package $1 is not installed"
+         fi
+     }
+     
+     # Testování balíčků
+     test_package "tar"
+     test_package "telnet"
+     test_package "htop"
+     ```
 
-**Pro Debian servery (debian-01, debian-02):**
-1. Připojení se k Debian serverům přes SSH nebo terminál přímo na serverech.
-2. Spusťte příkaz pro změnu hostname:
-   ```
-   sudo hostnamectl set-hostname debian-01
-   ```
-   nebo
-   ```
-   sudo hostnamectl set-hostname debian-02
-   ```
-3. Zadání hesla správce (sudo).
-4. Kontrola, zda byl hostname úspěšně změněn:
-   ```
-   hostname
-   ```
-   Měl by vypsat `debian-01` nebo `debian-02`.
+**Udělení oprávnění pro spuštění:**
+     ```
+     chmod +x test_packages.sh
+     ```
+**Přesunutí skriptu do domovského adresáře uživatele student:**
+     ```
+     mv test_packages.sh /home/student/
+     ```
+ **Testování skriptu:**
+   - Spusťte skript pomocí:
+     ```
+     ./test_packages.sh
+     ```
 
-Tímto způsobem by měly být nastaveny hostnames na Ubuntu klientovi a Debian serverech podle zadaných specifikací.
+Skript by měl zkontrolovat instalaci balíčků `tar`, `telnet` a `htop` a vypsat zprávy o tom, zda jsou nainstalovány či nikoliv.
