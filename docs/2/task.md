@@ -1,7 +1,7 @@
 postup pro nastavení statické IPv4 a IPv6 adresy na serveru Debian-01:
 
 1. **Připojení k serveru:**
-   - Připojte se k serveru Debian-01 přes SSH nebo otevřete terminál přímo na serveru.
+   - přes SSH nebo terminál přímo na serveru.
 
 2. **Nastavení statické IPv4 adresy:**
      ```
