@@ -1,5 +1,5 @@
 # Project Documentation
-The project involves setting up network connectivity, DHCP services, backup solutions, web server deployment, and more Ubuntu client and Debian Servers.
+The project involves setting up network connectivity, DHCP services, backup solutions, web server deployment, and more using Ubuntu client and Debian Servers.
 
 ### Project Specifications
 - Ubuntu VM: 1 instance
