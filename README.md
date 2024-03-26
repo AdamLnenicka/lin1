@@ -51,8 +51,8 @@
    - NFS share configured on debian-02 for the /share directory.
    - Automatic mounting of the NFS share set up on ubuntu-01 for the /backups directory.
 
-**11. NFS Share Setup:**
-- Create a bash script on the ubuntu-01 client that tests whether the utilities tar, telnet, and htop are installed in the system. If the package is installed, print "Package <name> is installed" to the terminal; if not, print "Package <name> is not installed". Save it as test_packages.sh in the home directory of the user 'student'
+**11. Test Packages Bash Script (test_packages.sh):**
+- A bash script named 'test_packages.sh' has been crafted on the ubuntu-01 client to ascertain the presence of critical utilities within the system. The script systematically checks for the existence of essential packages such as tar, telnet, and htop. Upon execution, it diligently verifies the installation status of each package and promptly communicates the result to the user via the terminal interface. This script offers a convenient means of ensuring the availability of fundamental tools essential for system functionality. It resides in the home directory of the user 'student', offering ease of access and execution.
 
-**12. NFS Share Setup:**
-- Install and set up the WordPress content management system on ubuntu-01. Ensure security during configuration. Complete the initial installation and end up on the WordPress homepage
+**12. WordPress Installation and Configuration:**
+- On the ubuntu-01 server, the WordPress content management system has been meticulously installed and configured to establish a robust web publishing platform. Attention to security measures was paramount throughout the setup process to fortify the system against potential vulnerabilities. Following the installation steps, including downloading the latest WordPress version, configuring database settings, and executing the installation script, a secure WordPress environment was established. By implementing security measures such as password strength enforcement, regular updates, and access restrictions, a resilient WordPress website has been erected, poised for content creation and dissemination. Upon accessing the server, users are seamlessly directed to the WordPress homepage, ushering in a seamless browsing experience.
