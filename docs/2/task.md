@@ -47,4 +47,4 @@ postup pro nastavení statické IPv4 a IPv6 adresy na serveru Debian-01:
      sudo systemctl restart networking
      ```
 
-Debian-01 má nastavenou statickou IPv4 adresu 10.0.1.1 s maskou 255.255.255.0 a IPv6 adresu 2001:dead::1/64. Rozhraní by se mělo automaticky aktivovat po startu systému, a pro zjišťování doménových jmen by měl být použit DNS server na adrese 8.8.8.8.
+Debian-01 má nastavenou statickou IPv4 adresu 10.0.1.1 s maskou 255.255.255.0 a IPv6 adresu 2001:dead::1/64. Rozhraní se automaticky aktivuje po startu systému, pro zjišťování doménových jmen je použit DNS server na adrese 8.8.8.8.
