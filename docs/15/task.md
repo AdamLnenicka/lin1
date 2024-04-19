@@ -4,7 +4,7 @@
      ```bash
      sudo nano /etc/apache2/sites-available/novy_virtualhost.conf
      ```
-   - Přidejte alias pro doménu `www.test2024.com`:
+   - alias pro doménu `www.test2024.com`:
      ```apache
      <VirtualHost *:80>
          ServerAdmin webmaster@example.com
@@ -15,7 +15,6 @@
      ```
 
 2. **Aktualizace konfigurace Apache:**
-   - Aktualizujte konfiguraci Apache:
      ```bash
      sudo a2ensite novy_virtualhost.conf
      sudo systemctl restart apache2
